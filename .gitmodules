@@ -4,3 +4,6 @@
 [submodule "products"]
 	path = products
 	url = https://github.com/ssilvac-nest-microservices/products-microservice.git
+[submodule "orders"]
+	path = orders
+	url = https://github.com/ssilvac-nest-microservices/orders-microservice.git
