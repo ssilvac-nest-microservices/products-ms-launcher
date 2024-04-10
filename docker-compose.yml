@@ -64,3 +64,18 @@ services:
     depends_on:
       - orders-db
       - nats-server
+
+  payments-service:
+    build: ./payments
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./payments/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3003
+      - NATS_SERVERS=nats://nats-server:4222
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_ENPOINT_SECRET=${STRIPE_ENPOINT_SECRET}
+      - SUCCESS_URL=${SUCCESS_URL}
+      - CANCEL_URL=${CANCEL_URL}
