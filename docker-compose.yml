@@ -69,12 +69,12 @@ services:
   payments-service:
     build: ./payments
     ports:
-      - "3003:3003"
+      - "${PAYMENT_MICROSERVICE_PORT}:${PAYMENT_MICROSERVICE_PORT}"
     volumes:
       - ./payments/src:/usr/src/app/src
     command: npm run start:dev
     environment:
-      - PORT=3003
+      - PORT=${PAYMENT_MICROSERVICE_PORT}
       - NATS_SERVERS=nats://nats-server:4222
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
       - STRIPE_ENPOINT_SECRET=${STRIPE_ENPOINT_SECRET}
