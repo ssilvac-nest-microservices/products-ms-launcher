@@ -54,6 +54,7 @@ services:
     build: ./orders
     ports:
       - "3001:3001"
+    restart: always
     volumes:
       - ./orders/src:/usr/src/app/src
     command: npm run start:dev
