@@ -10,3 +10,6 @@
 [submodule "payments"]
 	path = payments
 	url = https://github.com/ssilvac-nest-microservices/payments-microservice.git
+[submodule "auth"]
+	path = auth
+	url = https://github.com/ssilvac-nest-microservices/auth-microservice.git
