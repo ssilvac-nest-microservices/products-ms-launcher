@@ -21,7 +21,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres_password
       - POSTGRES_DB=ordersdb
-      - NATS_SERVERS=nats://nats-server:4222
   
   client-gateway:
     build: ./client-gateway
