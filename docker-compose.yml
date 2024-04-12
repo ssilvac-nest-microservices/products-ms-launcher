@@ -5,8 +5,6 @@ services:
     image: nats:latest
     container_name: nats-server
     ports: # exponer solo los puertos necesarios, total ya estan en la red interna
-      - "4222:4222"
-      - "6222:6222"
       - "8222:8222"
 
   orders-db:
@@ -82,11 +80,11 @@ services:
 
   auth-service:
     build: ./auth
-    ports:
-      - "3004:3004"
     volumes:
       - ./auth/src:/usr/src/app/src
     command: npm run start:dev
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${AUTH_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
