@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  nats-server:
+    image: nats:latest
+  
+  client-gateway:
+    build:
+      context: ./client-gateway
+      dockerfile: dockerfile.prod
+    image: client-gateway
+    ports:
+      - "${CLIENT_GATEWAY_PORT}:${CLIENT_GATEWAY_PORT}"
+    environment:
+      - PORT=${CLIENT_GATEWAY_PORT}
+      - NATS_SERVERS=nats://nats-server:4222
+
+  orders-service:
+    build:
+      context: ./orders
+      dockerfile: dockerfile.prod
+      args:
+        - ORDERS_DATABASE_URL=${ORDERS_DATABASE_URL}
+    image: orders-service
+    # restart: always
+    environment:
+      - PORT=3001
+      - DATABASE_URL=${ORDERS_DATABASE_URL}
+      - NATS_SERVERS=nats://nats-server:4222
+  
+  products-service:
+    build:
+      context: ./products
+      dockerfile: dockerfile.prod
+    image: products-service
+    environment:
+      - PORT=3002
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=file:./dev.db
+
+  payments-service:
+    build:
+      context: ./payments
+      dockerfile: dockerfile.prod
+    image: payments-service
+    ports:
+      - "${PAYMENT_MICROSERVICE_PORT}:${PAYMENT_MICROSERVICE_PORT}"
+    environment:
+      - PORT=${PAYMENT_MICROSERVICE_PORT}
+      - NATS_SERVERS=nats://nats-server:4222
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_ENPOINT_SECRET=${STRIPE_ENPOINT_SECRET}
+      - SUCCESS_URL=${SUCCESS_URL}
+      - CANCEL_URL=${CANCEL_URL}
+
+  auth-service:
+    build:
+      context: ./auth
+      dockerfile: dockerfile.prod
+    image: auth-service
+    environment:
+      - PORT=3004
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${AUTH_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}

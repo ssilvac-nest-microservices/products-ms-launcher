@@ -35,3 +35,11 @@ Si se trabaja en el repositorio que tiene los sub-módulos, **primero actualizar
 
 Si se hace al revés, se perderán las referencias de los sub-módulos en el repositorio principal y tendremos que resolver conflictos.
 
+# Prod
+
+1. clonar repo
+2. crear `.env` a partir de `.env.template`
+3. ejecutar comando
+```
+sudo docker compose -f docker-compose.prod.yml build
+```
