@@ -8,7 +8,7 @@ services:
     build:
       context: ./client-gateway
       dockerfile: dockerfile.prod
-    image: client-gateway
+    image: southamerica-west1-docker.pkg.dev/shop-microservices-420215/image-registry/client-gateway
     ports:
       - "${CLIENT_GATEWAY_PORT}:${CLIENT_GATEWAY_PORT}"
     environment:
@@ -21,7 +21,7 @@ services:
       dockerfile: dockerfile.prod
       args:
         - ORDERS_DATABASE_URL=${ORDERS_DATABASE_URL}
-    image: orders-service
+    image: southamerica-west1-docker.pkg.dev/shop-microservices-420215/image-registry/orders-service
     # restart: always
     environment:
       - PORT=3001
@@ -32,7 +32,7 @@ services:
     build:
       context: ./products
       dockerfile: dockerfile.prod
-    image: products-service
+    image: southamerica-west1-docker.pkg.dev/shop-microservices-420215/image-registry/products-service
     environment:
       - PORT=3002
       - NATS_SERVERS=nats://nats-server:4222
@@ -42,7 +42,7 @@ services:
     build:
       context: ./payments
       dockerfile: dockerfile.prod
-    image: payments-service
+    image: southamerica-west1-docker.pkg.dev/shop-microservices-420215/image-registry/payments-service
     ports:
       - "${PAYMENT_MICROSERVICE_PORT}:${PAYMENT_MICROSERVICE_PORT}"
     environment:
@@ -57,7 +57,7 @@ services:
     build:
       context: ./auth
       dockerfile: dockerfile.prod
-    image: auth-service
+    image: southamerica-west1-docker.pkg.dev/shop-microservices-420215/image-registry/auth-service
     environment:
       - PORT=3004
       - NATS_SERVERS=nats://nats-server:4222
